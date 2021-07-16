@@ -1,9 +1,11 @@
 import datetime
 
+from django.contrib.auth.models import User
 from django.db import models
 
 
 class Advertiser(models.Model):
+    user = models.OneToOneField(to=User, related_name='advertisers', on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
 
 
