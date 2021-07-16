@@ -1,6 +1,7 @@
 import datetime
 import time
 
+from django.shortcuts import get_object_or_404
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.generics import CreateAPIView, ListCreateAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -41,5 +42,6 @@ class ClickCreateAPIView(CreateAPIView):
         return ip
 
     def perform_create(self, serializer):
-        serializer.save(involved_ad=self.kwargs['pk'], impression_time=datetime.datetime.now(),
+        serializer.save(involved_ad=get_object_or_404(Ad, pk=self.kwargs['pk']),
+                        impression_time=datetime.datetime.now(),
                         user_ip=self.get_client_ip())
