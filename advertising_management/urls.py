@@ -7,4 +7,5 @@ urlpatterns = [
     path('ads/<int:pk>/', AdViewSet.as_view({'get': 'retrieve', 'delete': 'destroy'})),
     path('ads/<int:pk>/click', ClickCreateAPIView.as_view()),
 
+
 ]
