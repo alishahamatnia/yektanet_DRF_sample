@@ -16,6 +16,9 @@ class Ad(models.Model):
 
 
 class Impression(models.Model):
+    class Meta:
+        abstract = True
+
     involved_ad = models.ForeignKey(Ad, on_delete=models.CASCADE, related_name="%(class)s_list")
     user_ip = models.GenericIPAddressField()
     impression_time = models.DateTimeField()
