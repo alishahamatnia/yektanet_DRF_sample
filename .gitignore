@@ -182,3 +182,5 @@ db.sqlite3
 {"mode":"full","isActive":false}
 
 .idea
+
+venv
