@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import Ad, Advertiser, Click, Seen
+from .models import Ad, Advertiser, Click, Seen
 
 
 class AdvertiserSerializer(serializers.ModelSerializer):
@@ -8,10 +8,21 @@ class AdvertiserSerializer(serializers.ModelSerializer):
         fields = ['name']
 
 
-class AdSerializer(serializers.ModelSerializer):
+class AdSCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ad
-        fields = ['ad_owner', 'title', 'img_url', 'link', 'is_approved']
+        fields = ['id', 'title', 'img_url', 'link', 'is_approved']
+
+
+class AdListSerializer(AdSCreateSerializer):
+    class Meta(AdSCreateSerializer.Meta):
+        fields = AdSCreateSerializer.Meta.fields + ['ad_owner']
+
+
+class AdvertiserAdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Advertiser
+        fields = ['name', 'ads']
 
 
 class CLickSerializer(serializers.ModelSerializer):
