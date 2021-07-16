@@ -28,10 +28,10 @@ class AdvertiserAdSerializer(serializers.ModelSerializer):
 class CLickSerializer(serializers.ModelSerializer):
     class Meta:
         model = Click
-        fields = ['involved_ad', 'user_ip', 'impression_time']
+        fields = []
 
 
 class SeenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Seen
-        fields = ['involved_ad', 'user_ip', 'impression_time']
+        fields = []
