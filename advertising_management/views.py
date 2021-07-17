@@ -59,12 +59,12 @@ class ReportApiView(APIView):
             'involved_ad',
             'impression_time',
             'user_ip',
-        ).annotate(count=Count('id')).order_by('involved_ad', 'user_ip','impression_time')
+        ).annotate(count=Count('id')).order_by('involved_ad', 'user_ip', 'impression_time')
         views_report = Seen.objects.values_list(
             'involved_ad',
             'impression_time',
             'user_ip',
-        ).annotate(count=Count('id')).order_by('involved_ad', 'user_ip','impression_time')
+        ).annotate(count=Count('id')).order_by('involved_ad', 'user_ip', 'impression_time')
 
         impression_report = defaultdict(lambda: defaultdict(lambda: {
             'clicked': 0,
@@ -92,10 +92,27 @@ class ReportApiView(APIView):
             click_per_view_report[impression_date] = impression_data['clicked'] / impression_data['viewed'] \
                 if impression_data['viewed'] else 1
 
-        clicked_viewd_average_time  =
+        clicked_viewed_average_time = 0
+        for cli in clicks_report:
+            # continue
+            for i in range(len(views_report)):
+                # continue
+                vi = views_report[i]
+                if vi[0] == cli[0] and vi[1] < cli[1] and vi[2] == cli[2]:
+                    continue
+                if cli[1] > views_report[i - 1 if i > 0 else 0][1]:
+                    clicked_viewed_average_time += cli[1].timestamp() - views_report[i - 1 if i > 0 else 0][
+                        1].timestamp()
+                if vi[0] == cli[0] and vi[2] == cli[2]:
+                    continue
+
+        clicked_viewed_average_time /= len(clicks_report)
+
         return Response({
             'impression_report': impression_report,
             'click_per_view_report': click_per_view_report,
+            'clicked_viewed_average_time': clicked_viewed_average_time
+
         })
 
 
