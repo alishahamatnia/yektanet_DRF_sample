@@ -32,3 +32,10 @@ class Click(Impression):
 
 class Seen(Impression):
     pass
+
+
+class Report(models.Model):
+    period = models.CharField(max_length=15)
+    view_count = models.IntegerField()
+    click_count = models.IntegerField()
+    report_time = models.DateTimeField()
