@@ -131,5 +131,9 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'last_hour_report',
         'schedule': 3600.0,
     },
+    'save-report-every-day': {
+        'task': 'last_day_report',
+        'schedule': 73440.0,
+    },
 
 }
